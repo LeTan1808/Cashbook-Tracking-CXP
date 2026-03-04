@@ -1,20 +1,9 @@
 self.addEventListener('push', function(event) {
-  const data = event.data ? event.data.json() : {};
-  const title = data.title || 'Thông báo mới';
-  const options = {
-    body: data.body || 'Bạn có một cập nhật mới từ Cashbook',
-    icon: 'icon.png',
-    badge: 'icon.png'
-  };
-
+  const data = event.data ? event.data.json() : { title: 'Thông báo', body: 'Có cập nhật mới!' };
   event.waitUntil(
-    self.registration.showNotification(title, options)
-  );
-});
-
-self.addEventListener('notificationclick', function(event) {
-  event.notification.close();
-  event.waitUntil(
-    clients.openWindow('/')
+    self.registration.showNotification(data.title, {
+      body: data.body,
+      icon: './icon.png'
+    })
   );
 });
